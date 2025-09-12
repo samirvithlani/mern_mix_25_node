@@ -1,5 +1,8 @@
 const express = require("express") //express module..
+const mongoose  = require("mongoose")
 const app = express()
+
+const userModel = require("./models/UserModel") //userModel == userSchema == db.users
 
 
 
@@ -49,7 +52,24 @@ app.get("/users",(req,res)=>{
     })
 })
 
+app.get("/usersfromdb",async(req,res)=>{
 
+    //databse....
+    //db.users.find
+    const users = await userModel.find()
+    console.log(users)
+    res.json({
+        message:"users fetched..",
+        data:users
+    })
+
+
+})
+
+//db connection...
+mongoose.connect("mongodb://127.0.0.1:27017/mern_club_mix").then(()=>{
+    console.log("database connected successfully!!")
+})
 
 //server creation...
 const PORT = 3000

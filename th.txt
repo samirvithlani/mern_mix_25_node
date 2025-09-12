@@ -19,3 +19,9 @@ npm i nodemon -g
 -g : global module
 
 npm i nodemon --dev
+
+mongo db:
+mongoose: ORM: object relation mapping:
+class --> collection
+
+users -- >userSchema
