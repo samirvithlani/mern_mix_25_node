@@ -30,7 +30,51 @@ const getUserById = async (req, res) => {
     });
   }
 };
+
+//req.params
+//req.query
+//req.body
+//req.headers
+
+
+// const addUser = async(req,res)=>{
+
+//   console.log("req body",req.body)
+//   //db.users.insert({})
+//   //db.users.insert(req.body)
+//   //userModel.insert(req.body)
+
+//   //mongoose--orm
+//   const savedUser = await userModel.create(req.body)
+//   res.json({
+//     message:"user saved successfully !!",
+//     data:savedUser
+//   })
+
+// }
+
+const addUser = async(req,res)=>{
+
+  console.log("req body",req.body)
+  
+  try{
+  const savedUser = await userModel.create(req.body)
+  res.json({
+    message:"user saved successfully !!",
+    data:savedUser
+  })
+}catch(err){
+  res.json({
+    message:"error while adding user",
+    err:err
+  })
+}
+
+}
+
+
 module.exports = {
   getUsers,
   getUserById,
+  addUser
 };

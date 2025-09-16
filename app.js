@@ -2,6 +2,9 @@ const express = require("express") //express module..
 const mongoose  = require("mongoose")
 const app = express()
 
+//global middlware..
+app.use(express.json()) //req.body json type excpet..
+
 //require routes
 
 const userRoutes = require("./routes/UserRoutes")

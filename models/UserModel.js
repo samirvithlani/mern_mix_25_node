@@ -3,6 +3,17 @@ const Schema = mongoose.Schema // class
 
 const userSchema = new Schema({
     //filed...
+    name:{
+        type:String,
+        required:true
+    },
+    age:{
+        type:Number
+    },
+    status:{
+        type:Boolean,
+        default:true
+    }
 })
 //users == collection
 //if collection is not exist it will create...
