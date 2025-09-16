@@ -1,7 +1,8 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema // class
 
-const userSchema = new Schema({
+const userSchema = new Schema(
+    {
     //filed...
     name:{
         type:String,
@@ -13,7 +14,18 @@ const userSchema = new Schema({
     status:{
         type:Boolean,
         default:true
+    },
+    hobbies:[
+        {
+            type:String,
+        }
+    ],
+    bloodGroup:{
+        enum:["A+","A-","O+","O-"],
+        type:String
     }
+},{
+    timestamps:true
 })
 //users == collection
 //if collection is not exist it will create...
