@@ -87,10 +87,43 @@ const deleteUser = async(req,res)=>{
 
 }
 
+const updateUser= async(req,res)=>{
+
+
+  //udpate table set name= ?,... where id = ?
+  //db.users.update({$set:{}},id)
+  const id = req.params.id
+  //const updatedUser  = await userModel.findByIdAndUpdate(id,req.body) //it will return ol data
+  const updatedUser  = await userModel.findByIdAndUpdate(id,req.body,{new:true})
+  res.json({
+    message:"user updated successfully!!",
+    data:updatedUser
+  })
+
+
+}
+
+const addHobby = async(req,res)=>{
+
+
+  //if hobby is exist send error message that this hobby is already exist !!
+  const id = req.params.id
+  const updatedUser = await userModel.findByIdAndUpdate(id,{$push:{hobbies:req.body.hobby}},{new:true})  
+  res.json({
+    message:`new hobby ${req.body.hobby} added successfully...`,
+    data:updatedUser
+  })
+
+
+
+}
+
 
 module.exports = {
   getUsers,
   getUserById,
   addUser,
-  deleteUser
+  deleteUser,
+  updateUser,
+  addHobby
 };
