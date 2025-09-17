@@ -106,3 +106,11 @@ middleware:
 filter: api -->routes --> [function:decide <-->controller] controller [business logic]
 
 zod validation....
+
+
+nodemailer
+
+google account -->sec==>2 step veri.
+
+search for app password --->
+copy

@@ -59,6 +59,8 @@ const addUser = async(req,res)=>{
   
   try{
   const savedUser = await userModel.create(req.body)
+
+  //mailsend(savedUser.email,"","")
   res.json({
     message:"user saved successfully !!",
     data:savedUser
