@@ -9,7 +9,7 @@ const mailSend = async(to,subject,text)=>{
         service:"gmail",
         auth:{
             user:"pythonforsamir@gmail.com",
-            pass:"nkee vqzq jahq cpdk"
+            pass:""
         }
     })
     const mailOptions = {
