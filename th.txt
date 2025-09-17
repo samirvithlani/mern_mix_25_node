@@ -96,3 +96,13 @@ REQUEST:
 APP -->Routes --> Controller[functions]-->model
 RESPO
 -->controller --> routes-->app
+
+middleware:
+1)app level
+2)global m
+3)routes level mi
+
+
+filter: api -->routes --> [function:decide <-->controller] controller [business logic]
+
+zod validation....
