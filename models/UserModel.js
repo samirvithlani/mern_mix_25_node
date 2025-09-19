@@ -23,6 +23,11 @@ const userSchema = new Schema(
     bloodGroup:{
         enum:["A+","A-","O+","O-"],
         type:String
+    },
+    roleId:{
+        type:Schema.Types.ObjectId,
+        ref:"role"
+
     }
 },{
     timestamps:true

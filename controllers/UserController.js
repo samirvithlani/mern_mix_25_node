@@ -1,7 +1,7 @@
 const userModel = require("../models/UserModel");
 
 const getUsers = async (req, res) => {
-  const users = await userModel.find();
+  const users = await userModel.find().populate("roleId","name");
   res.json({
     message: "user fetched..",
     data: users,

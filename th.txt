@@ -114,3 +114,18 @@ google account -->sec==>2 step veri.
 
 search for app password --->
 copy
+
+role
+id(int) name
+
+user
+id name email age roleId
+1   x    x     21  1
+
+create table user(....roleId int,foreign key ref role(id))
+
+select * from user;
+id name em... 1
+
+JOIN
+selct * from user natural join role 

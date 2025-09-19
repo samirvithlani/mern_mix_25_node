@@ -12,6 +12,9 @@ const userRoutes = require("./routes/UserRoutes")
 //app.use(userRoutes)
 app.use("/user",userRoutes)
 
+const roleRoutes = require("./routes/RoleRoutes")
+app.use("/roles",roleRoutes)
+
 
 //db connection...
 mongoose.connect("mongodb://127.0.0.1:27017/mern_club_mix").then(()=>{
