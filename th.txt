@@ -129,3 +129,14 @@ id name em... 1
 
 JOIN
 selct * from user natural join role 
+
+multer: npm i multer :
+ bin...
+
+store..
+databse:
+server:
+cloud:
+
+location -->copy -->paste
+
