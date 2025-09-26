@@ -58,7 +58,8 @@ const addUser = async (req, res) => {
   //file upload.. path -- db store/..
 
   try {
-    const savedUser = await userModel.create(req.body);
+    //const savedUser = await userModel.create(req.body);
+    const savedUser = await userModel.create({...req.body,file:req.file.path});
 
     //mailsend(savedUser.email,"","")
     res.json({
