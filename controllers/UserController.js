@@ -1,7 +1,7 @@
 const userModel = require("../models/UserModel");
 
 const getUsers = async (req, res) => {
-  const users = await userModel.find().populate("roleId","name");
+  const users = await userModel.find().populate("roleId", "name");
   res.json({
     message: "user fetched..",
     data: users,
@@ -36,7 +36,6 @@ const getUserById = async (req, res) => {
 //req.body
 //req.headers
 
-
 // const addUser = async(req,res)=>{
 
 //   console.log("req body",req.body)
@@ -53,74 +52,66 @@ const getUserById = async (req, res) => {
 
 // }
 
-const addUser = async(req,res)=>{
-
-  console.log("req body",req.body)
+const addUser = async (req, res) => {
+  console.log("req body", req.body);
+  console.log("req body", req.file);
   //file upload.. path -- db store/..
-  
-  try{
-  const savedUser = await userModel.create(req.body)
 
-  //mailsend(savedUser.email,"","")
-  res.json({
-    message:"user saved successfully !!",
-    data:savedUser
-  })
-}catch(err){
-  res.json({
-    message:"error while adding user",
-    err:err
-  })
-}
+  try {
+    const savedUser = await userModel.create(req.body);
 
-}
+    //mailsend(savedUser.email,"","")
+    res.json({
+      message: "user saved successfully !!",
+      data: savedUser,
+    });
+  } catch (err) {
+    res.json({
+      message: "error while adding user",
+      err: err,
+    });
+  }
+};
 
-const deleteUser = async(req,res)=>{
-
+const deleteUser = async (req, res) => {
   //delete from table where id = ?
   //db.users.remove({_id:"id....."})
   //userModel.remove(id)
   //apply if
-  const deletedUser = await userModel.findByIdAndDelete(req.params.id)
+  const deletedUser = await userModel.findByIdAndDelete(req.params.id);
   res.json({
-    message:"user deleted !",
-    data:deletedUser
-  })
+    message: "user deleted !",
+    data: deletedUser,
+  });
+};
 
-
-}
-
-const updateUser= async(req,res)=>{
-
-
+const updateUser = async (req, res) => {
   //udpate table set name= ?,... where id = ?
   //db.users.update({$set:{}},id)
-  const id = req.params.id
+  const id = req.params.id;
   //const updatedUser  = await userModel.findByIdAndUpdate(id,req.body) //it will return ol data
-  const updatedUser  = await userModel.findByIdAndUpdate(id,req.body,{new:true})
+  const updatedUser = await userModel.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
   res.json({
-    message:"user updated successfully!!",
-    data:updatedUser
-  })
+    message: "user updated successfully!!",
+    data: updatedUser,
+  });
+};
 
-
-}
-
-const addHobby = async(req,res)=>{
-
-
+const addHobby = async (req, res) => {
   //if hobby is exist send error message that this hobby is already exist !!
-  const id = req.params.id
-  const updatedUser = await userModel.findByIdAndUpdate(id,{$push:{hobbies:req.body.hobby}},{new:true})  
+  const id = req.params.id;
+  const updatedUser = await userModel.findByIdAndUpdate(
+    id,
+    { $push: { hobbies: req.body.hobby } },
+    { new: true }
+  );
   res.json({
-    message:`new hobby ${req.body.hobby} added successfully...`,
-    data:updatedUser
-  })
-
-
-
-}
-
+    message: `new hobby ${req.body.hobby} added successfully...`,
+    data: updatedUser,
+  });
+};
 
 module.exports = {
   getUsers,
@@ -128,5 +119,5 @@ module.exports = {
   addUser,
   deleteUser,
   updateUser,
-  addHobby
+  addHobby,
 };

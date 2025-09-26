@@ -29,7 +29,7 @@ const userSchema = new Schema(
         ref:"role"
 
     },
-    profilePic:{
+    file:{
         type:String
     }
 },{
