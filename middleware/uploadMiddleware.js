@@ -4,9 +4,9 @@ const path = require("path");
 
 // Storage config
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads"); // 
-  },
+  // destination: (req, file, cb) => {
+  //   cb(null, "./uploads"); // 
+  // },
   filename: (req, file, cb) => {
     // unique file name
     cb(null,file.originalname);

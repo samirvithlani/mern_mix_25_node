@@ -1,4 +1,5 @@
 const userModel = require("../models/UserModel");
+const cloudinaryUtil = require("../utils/cloudinaryUtil")
 
 const getUsers = async (req, res) => {
   const users = await userModel.find().populate("roleId", "name");
@@ -59,7 +60,10 @@ const addUser = async (req, res) => {
 
   try {
     //const savedUser = await userModel.create(req.body);
-    const savedUser = await userModel.create({...req.body,file:req.file.path});
+    const cloudinaryResponse = await cloudinaryUtil.uploadToCloud(req.file.path)
+    //console.log("cloundiary res..",cloudinaryResponse)
+    // const savedUser = await userModel.create({...req.body,file:req.file.path});
+    const savedUser = await userModel.create({...req.body,file:cloudinaryResponse.secure_url});
 
     //mailsend(savedUser.email,"","")
     res.json({
