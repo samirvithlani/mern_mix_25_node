@@ -3,14 +3,24 @@ const multer = require("multer")
 const storage = multer.diskStorage({
     destination:"./uploads",
     filename:(req,file,cb)=>{
-        cb(null,file.originalname )
+        cb(null,file.originalname)
     }
 })
 
 const upload = multer({
     storage:storage,
-    //fileFilter:
+    fileFilter:(req,file,cb)=>{
+        if(file.mimetype =="image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/png"){
+            cb(null,true) //accept
+        }
+        else{
+            cb(new Error("only images are allowd"),false) //no accept
+        }
+    }
 }).single("file") //filedName
+//any array
+
+
 
 const uploadFile =(req,res)=>{
 
@@ -18,7 +28,7 @@ const uploadFile =(req,res)=>{
         if(err){
             res.json({
                 message:"error while uploading file...",
-                err:err
+                err:err.message
             })
         }
         else{
@@ -28,7 +38,6 @@ const uploadFile =(req,res)=>{
             })
         }
     })
-
 
 }
 

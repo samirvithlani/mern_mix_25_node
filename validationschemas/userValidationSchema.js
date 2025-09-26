@@ -6,7 +6,8 @@ const userValidationSchema = zod.object({
     status:zod.boolean().default(true),
     hobbies:zod.array(zod.string()),
     bloodGroup:zod.enum(["A+","A-","O+","O-"],"invalid blood group"),
-    roleId:zod.string()
+    roleId:zod.string(),
+    file:zod.instanceof(File)
 }).strict()
 
 module.exports = userValidationSchema

@@ -28,6 +28,9 @@ const userSchema = new Schema(
         type:Schema.Types.ObjectId,
         ref:"role"
 
+    },
+    profilePic:{
+        type:String
     }
 },{
     timestamps:true

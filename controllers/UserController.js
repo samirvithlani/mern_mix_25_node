@@ -56,6 +56,7 @@ const getUserById = async (req, res) => {
 const addUser = async(req,res)=>{
 
   console.log("req body",req.body)
+  //file upload.. path -- db store/..
   
   try{
   const savedUser = await userModel.create(req.body)
