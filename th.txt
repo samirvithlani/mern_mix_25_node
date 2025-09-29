@@ -143,3 +143,11 @@ location -->copy -->paste
 
 multer middleware :
 
+
+
+AUTH MODULE:
+
+User Register: plain password --> 
+
+fb
+sam123: secret: -->hash --> bcrypt

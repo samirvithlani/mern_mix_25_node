@@ -18,4 +18,5 @@ router.post("/user",upload.single("file"),requestMiddleware(userValidationSchema
 router.delete("/user/:id",userController.deleteUser)
 router.put("/user/:id",userController.updateUser)
 router.put("/addhobby/:id",userController.addHobby)
+router.post("/login",userController.loginUser)
 module.exports = router

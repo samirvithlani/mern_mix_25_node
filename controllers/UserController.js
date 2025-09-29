@@ -1,5 +1,6 @@
 const userModel = require("../models/UserModel");
 const cloudinaryUtil = require("../utils/cloudinaryUtil")
+const bcrypt = require("bcrypt")
 
 const getUsers = async (req, res) => {
   const users = await userModel.find().populate("roleId", "name");
@@ -54,11 +55,13 @@ const getUserById = async (req, res) => {
 // }
 
 const addUser = async (req, res) => {
-  console.log("req body", req.body);
+  console.log("req body", req.body); // password --> plain password
   console.log("req body", req.file);
   //file upload.. path -- db store/..
 
   try {
+    const hashedPassword = bcrypt.hashSync(req.body.password,10)
+    req.body.password = hashedPassword // req.body password has been replaced by hashedPassword
     //const savedUser = await userModel.create(req.body);
     const cloudinaryResponse = await cloudinaryUtil.uploadToCloud(req.file.path)
     //console.log("cloundiary res..",cloudinaryResponse)
@@ -118,6 +121,34 @@ const addHobby = async (req, res) => {
   });
 };
 
+const loginUser = async(req,res)=>{
+
+  const {email,password} = req.body;
+  console.log(password)
+  //const foundUser = await userModel.find({email:email,password:password}) //fail..
+  const foundUserFromEmail = await userModel.findOne({email:email}) //[] //{}
+  console.log(foundUserFromEmail)
+  if(foundUserFromEmail){
+    //{} --object db... hashedPassword
+    if(bcrypt.compareSync(password,foundUserFromEmail.password)){
+       res.status(200).json({
+        message:"user found",
+        data:foundUserFromEmail
+       })
+    }
+    else{
+      res.status(401).json({
+        message:"invalid cred",
+      })
+    }
+  }
+  else{
+    res.status(404).json({
+      message:"user not found.."
+    })
+  }
+}
+
 module.exports = {
   getUsers,
   getUserById,
@@ -125,4 +156,5 @@ module.exports = {
   deleteUser,
   updateUser,
   addHobby,
+  loginUser
 };

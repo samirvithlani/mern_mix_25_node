@@ -14,6 +14,8 @@ const userValidationSchema = z.object({
   ),
   bloodGroup: z.enum(["A+", "A-", "O+", "O-"], "invalid blood group"),
   roleId: z.string(),
+  password:z.string(),
+  email:z.string(),
   file: z
     .object({
       originalname: z.string(),

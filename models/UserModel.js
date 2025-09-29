@@ -31,6 +31,13 @@ const userSchema = new Schema(
     },
     file:{
         type:String
+    },
+    password:{
+        type:String
+    },
+    email:{
+        type:String,
+        unique:true
     }
 },{
     timestamps:true
