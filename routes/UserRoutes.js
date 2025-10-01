@@ -5,8 +5,9 @@ const testMiddeware = require("../middleware/TestMiddleware")
 const requestMiddleware = require("../middleware/RequestMiddlewre")
 const userValidationSchema = require("../validationschemas/userValidationSchema")
 const upload = require("../middleware/uploadMiddleware");
+const authMiddleware = require("../middleware/AuthMiddleware")
 
-router.get("/users",userController.getUsers)
+router.get("/users",authMiddleware.verifyUser,userController.getUsers)
 
 //http://localhost:3000/user/user/101
 router.get("/user/:id",userController.getUserById)
@@ -19,4 +20,5 @@ router.delete("/user/:id",userController.deleteUser)
 router.put("/user/:id",userController.updateUser)
 router.put("/addhobby/:id",userController.addHobby)
 router.post("/login",userController.loginUser)
+router.post("/token",userController.getUserFromToken)
 module.exports = router

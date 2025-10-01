@@ -151,3 +151,35 @@ User Register: plain password -->
 
 fb
 sam123: secret: -->hash --> bcrypt
+
+
+
+api.. react - login -->
+login sucess -- >id localstorage store...
+
+JWT TOKEN
+
+web security:
+auuth2 : jwt token json web token :-->
+
+
+login :- token : cookies:store:
+
+getUserFromToken
+
+Bearer Token
+
+Token:
+
+npm i jsonwebtoken
+
+userCOntroller login api
+token generate : user._id
+--------------------------
+getuserfrom token -->body - post -- req.body
+token --> db user
+
+api securty: middleware: headers -- autho -- token Bearer : verify
+next
+
+response..

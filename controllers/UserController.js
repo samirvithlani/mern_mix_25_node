@@ -1,6 +1,8 @@
 const userModel = require("../models/UserModel");
 const cloudinaryUtil = require("../utils/cloudinaryUtil")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+const secret = "samir"
 
 const getUsers = async (req, res) => {
   const users = await userModel.find().populate("roleId", "name");
@@ -67,11 +69,12 @@ const addUser = async (req, res) => {
     //console.log("cloundiary res..",cloudinaryResponse)
     // const savedUser = await userModel.create({...req.body,file:req.file.path});
     const savedUser = await userModel.create({...req.body,file:cloudinaryResponse.secure_url});
-
+    const token = jwt.sign(savedUser.toObject(),secret)
     //mailsend(savedUser.email,"","")
     res.json({
       message: "user saved successfully !!",
       data: savedUser,
+     // token:token
     });
   } catch (err) {
     res.json({
@@ -128,12 +131,18 @@ const loginUser = async(req,res)=>{
   //const foundUser = await userModel.find({email:email,password:password}) //fail..
   const foundUserFromEmail = await userModel.findOne({email:email}) //[] //{}
   console.log(foundUserFromEmail)
+  //const token = jwt.sign(foundUserFromEmail.toObject(),secret)
+  const token = jwt.sign({id:foundUserFromEmail._id},secret,{
+    expiresIn:60
+  })
+
   if(foundUserFromEmail){
     //{} --object db... hashedPassword
     if(bcrypt.compareSync(password,foundUserFromEmail.password)){
        res.status(200).json({
         message:"user found",
-        data:foundUserFromEmail
+        //data:foundUserFromEmail
+        token:token
        })
     }
     else{
@@ -149,6 +158,32 @@ const loginUser = async(req,res)=>{
   }
 }
 
+const getUserFromToken = async(req,res)=>{
+
+
+    const token = req.body.token;
+    try{
+
+      const userFromToken = jwt.verify(token,secret)
+      console.log(userFromToken)
+      const user = await userModel.findById(userFromToken.id)
+
+      res.status(200).json({
+        message:"valid user",
+        user:userFromToken,
+        user:user
+      })
+    }catch(err){
+        console.log(err)
+        res.status(401).json({
+          message:"token is not valid.."
+        })
+
+    }
+
+
+}
+
 module.exports = {
   getUsers,
   getUserById,
@@ -156,5 +191,6 @@ module.exports = {
   deleteUser,
   updateUser,
   addHobby,
-  loginUser
+  loginUser,
+  getUserFromToken
 };
