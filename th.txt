@@ -131,7 +131,8 @@ JOIN
 selct * from user natural join role 
 
 multer: 
-npm i multer :
+npm i multer 
+:
  bin...
 
 store..
