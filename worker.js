@@ -13,7 +13,7 @@ const worker = new Worker(
     async(job)=>{
         //job...        
         console.log(`procesing job for ${job.data.name}`)
-        await new Promise((resolve)=>setTimeout((resolve),5000))
+        await new Promise((resolve)=>setTimeout((resolve),  ))
         console.log(`job done for ${job.data.name}`)
     },
     {connection:redisConnection}
