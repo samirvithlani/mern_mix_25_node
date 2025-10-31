@@ -3,6 +3,34 @@ const mongoose = require("mongoose");
 const app = express();
 const Redis = require("ioredis");
 const { Queue } = require("bullmq");
+const http = require("http")//http
+const server = http.createServer(app) //
+const {Server}  = require("socket.io")
+
+const cors = require("cors")
+app.use(cors())
+
+//server object...
+const io = new Server(server,{
+  cors:{
+    origin:"*",
+    methods:["GET","POST"]
+  }
+})
+
+
+//socket total event driven..
+io.on("connection",(socket)=>{
+  
+  console.log(`user connected with id ${socket.id}`)
+  socket.on("send_message",(data)=>{
+    console.log(`message received... ${data}`)
+    socket.emit("catch_replay",data.toUpperCase())
+    //socket.broadcast.emit("catch_replay",data.toUpperCase())
+  })
+})
+
+
 
 //global middlware..
 app.use(express.json()); //req.body json type excpet..
@@ -18,6 +46,7 @@ const roleRoutes = require("./routes/RoleRoutes");
 app.use("/roles", roleRoutes);
 
 const uploadRoutes = require("./routes/UploadRoutes");
+const { da } = require("zod/locales");
 app.use("/upload", uploadRoutes);
 
 //db connection...
@@ -26,62 +55,62 @@ mongoose.connect("mongodb://127.0.0.1:27017/mern_club_mix").then(() => {
 });
 
 //redis connection
-const redisConnection = new Redis({
-  host: "127.0.0.1",
-  port: 6379,
-});
-//queue..
-const myQueue = new Queue("taskQueue", { connection: redisConnection });
+// const redisConnection = new Redis({
+//   host: "127.0.0.1",
+//   port: 6379,
+// });
+// //queue..
+// const myQueue = new Queue("taskQueue", { connection: redisConnection });
 
-app.post("/set-batch", async (req, res) => {
-  const { name } = req.body;
-  await myQueue.add("task", { name }, { delay: 0 });
-  res.json({
-    message: "batch set successfully...",
-  });
-});
+// app.post("/set-batch", async (req, res) => {
+//   const { name } = req.body;
+//   await myQueue.add("task", { name }, { delay: 0 });
+//   res.json({
+//     message: "batch set successfully...",
+//   });
+// });
 
-const fakeData = {
-  1: { name: "ram", age: 23 },
-  2: { name: "jay", age: 23 },
-  3: { name: "raj", age: 23 },
-  4: { name: "ajay", age: 23 },
-  5: { name: "amit", age: 23 },
-};
+// const fakeData = {
+//   1: { name: "ram", age: 23 },
+//   2: { name: "jay", age: 23 },
+//   3: { name: "raj", age: 23 },
+//   4: { name: "ajay", age: 23 },
+//   5: { name: "amit", age: 23 },
+// };
 
-const cacheMiddleware = async (req, res, next) => {
-  const { userId } = req.params;
-  try {
-    const cachedData = await redisConnection.get(userId);
-    if (cachedData) {
-      console.log("cache hit...");
-      return res.json({
-        message: "data fetched successfully !!",
-        data: JSON.parse(cachedData),
-      });
+// const cacheMiddleware = async (req, res, next) => {
+//   const { userId } = req.params;
+//   try {
+//     const cachedData = await redisConnection.get(userId);
+//     if (cachedData) {
+//       console.log("cache hit...");
+//       return res.json({
+//         message: "data fetched successfully !!",
+//         data: JSON.parse(cachedData),
+//       });
       
-    }
-    console.log("cache miss");
-    next();
-  } catch (err) {
-    console.log("redis error...", err);
-    next();
-  }
-};
+//     }
+//     console.log("cache miss");
+//     next();
+//   } catch (err) {
+//     console.log("redis error...", err);
+//     next();
+//   }
+// };
 
-app.get("/userdemo/:userId", cacheMiddleware, (req, res) => {
-  const { userId } = req.params;
-  const userData = fakeData[userId]; //db operation...
-  //cache store...
-  redisConnection.setex(userId, 600, JSON.stringify(userData));
-  return res.json({
-    message: "data fetched successfully !!",
-    data: userData,
-  });
-});
+// app.get("/userdemo/:userId", cacheMiddleware, (req, res) => {
+//   const { userId } = req.params;
+//   const userData = fakeData[userId]; //db operation...
+//   //cache store...
+//   redisConnection.setex(userId, 600, JSON.stringify(userData));
+//   return res.json({
+//     message: "data fetched successfully !!",
+//     data: userData,
+//   });
+// });
 
 //server creation...
 const PORT = 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
 });

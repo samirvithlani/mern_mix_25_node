@@ -13,6 +13,7 @@
     "bcrypt": "^6.0.0",
     "bullmq": "^5.61.2",
     "cloudinary": "^2.7.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "ioredis": "^5.8.2",
     "jsonwebtoken": "^9.0.2",
@@ -20,6 +21,7 @@
     "multer": "^2.0.2",
     "nodemailer": "^7.0.6",
     "path": "^0.12.7",
+    "socket.io": "^4.8.1",
     "zod": "^4.1.9"
   }
 }

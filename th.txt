@@ -184,3 +184,9 @@ api securty: middleware: headers -- autho -- token Bearer : verify
 next
 
 response..
+
+frontend: form ---> controller
+API --> call
+on network --> socket programming
+
+express:server: --> express no support http server:
